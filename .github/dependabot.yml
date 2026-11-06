@@ -4,3 +4,17 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      maven-dependencies:
+        patterns:
+          - "*"
+    ignore:
+      # The org.jahia.modules:jahia-modules parent and org.jahia.* artifacts define the
+      # target Jahia platform version: they are upgraded deliberately, not by Dependabot.
+      - dependency-name: "org.jahia.*"
+      # OSGi spec artifacts change Require-Capability / Import-Package ranges and must
+      # match what the Jahia platform provides (Felix SCR 2.1.30 / DS 1.4).
+      - dependency-name: "org.osgi:*"
+# Note: the highlight.js library itself is vendored as static files under
+# src/main/resources (no package manager manifest), so Dependabot does not track it.
+# Do not take a major upgrade of the shipped highlight.js library.
